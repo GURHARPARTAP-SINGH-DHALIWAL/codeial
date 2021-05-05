@@ -3,8 +3,14 @@ const port =8000;
 
 const app=express();
 
-//Use router fpr handling all requests
+//Use router for handling all requests any route starting wth / is sent to routes to entry point file index.js
 app.use('/',require('./routes'));
+
+//set up the view engine
+app.set('view engine','ejs');
+//folder for views
+app.set('views','./views');
+
 
 
 
