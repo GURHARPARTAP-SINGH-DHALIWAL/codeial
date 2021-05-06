@@ -1,7 +1,7 @@
 const express=require('express');
 const port =8000;
 const expressejslayouts=require('express-ejs-layouts');
-
+const db=require('./config/mongoose');
 const app=express();
 app.use(expressejslayouts);
 //From every ejs page it will take the link tag and put it in the head
