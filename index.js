@@ -4,6 +4,9 @@ const expressejslayouts=require('express-ejs-layouts');
 
 const app=express();
 app.use(expressejslayouts);
+//From every ejs page it will take the link tag and put it in the head
+app.set('layout extractStyles',true);
+app.set('layout extractScripts',true);
 
 //Use router for handling all requests any route starting wth / is sent to routes to entry point file index.js
 app.use('/',require('./routes'));
@@ -14,6 +17,8 @@ app.set('view engine','ejs');
 app.set('views','./views');
 
 
+app.use(express.urlencoded());
+app.use(express.static('assets'));
 
 
 
