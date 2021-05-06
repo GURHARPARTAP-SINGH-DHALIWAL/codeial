@@ -1,7 +1,9 @@
 const express=require('express');
 const port =8000;
+const expressejslayouts=require('express-ejs-layouts');
 
 const app=express();
+app.use(expressejslayouts);
 
 //Use router for handling all requests any route starting wth / is sent to routes to entry point file index.js
 app.use('/',require('./routes'));
