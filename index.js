@@ -1,4 +1,5 @@
 const express=require('express');
+const cookieParser=require('cookie-parser');
 const port =8000;
 const expressejslayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
@@ -9,6 +10,9 @@ app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
 //Use router for handling all requests any route starting wth / is sent to routes to entry point file index.js
+app.use(cookieParser());//Put it before tellingthat route will handle requests
+app.use(express.urlencoded());
+app.use(express.static('assets'));
 app.use('/',require('./routes'));
 
 //set up the view engine
