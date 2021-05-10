@@ -83,3 +83,8 @@ module.exports.createSession=function(req,res){
         }
     });
 };
+module.exports.exitSession=function(req,res)
+{
+    res.cookie('user_id',45);
+    return res.redirect('/user/sign-in');
+};
