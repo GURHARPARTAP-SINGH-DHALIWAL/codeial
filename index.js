@@ -7,6 +7,7 @@ const app=express();
 const session=require('express-session');   
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
+const MongoStore=require('connect-mongo')(session);
 app.use(expressejslayouts);
 //From every ejs page it will take the link tag and put it in the head
 app.set('layout extractStyles',true);
@@ -30,11 +31,19 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge : (1000*60*200)
-    }
+    },
+    store:new MongoStore({
+        mongooseConnection:db,
+        autoRemove:'disabled'
+    },function(err){
+        console.log(err||'connect-mongodb setup ok');
+    })
+
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 //Use router for handling all requests any route starting wth / is sent to routes to entry point file index.js
 app.use('/',require('./routes'));
 // app.use(express.urlencoded());
