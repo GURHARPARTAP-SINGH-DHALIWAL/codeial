@@ -2,6 +2,7 @@
 const User=require('../models/users');
 module.exports.profile=function(req,res){
     return res.render('users',{
+        title:"profile",
         name:"GSD"
     });
 };
@@ -39,4 +40,7 @@ module.exports.create=function(req,res){
             });
         }
     });
+};
+module.exports.createSession=function(req,res){
+    return res.redirect('/');
 };
