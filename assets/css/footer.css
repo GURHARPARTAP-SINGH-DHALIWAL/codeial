@@ -1,0 +1,20 @@
+#footer-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  justify-content: space-evenly;
+  width: 98.5%;
+  height: 10%;
+  background-color: grey;
+  padding: 10px;
+  background: #f519ca;
+  background: linear-gradient(90deg, #f519ca 17%, #097479 51%, #00d4ff 100%); }
+  #footer-main div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; }
+    #footer-main div a {
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem; }

@@ -1,0 +1,27 @@
+#header-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 10%;
+  width: 98.5%;
+  margin-top: 0;
+  padding: 10px;
+  background-color: rebeccapurple;
+  background: #ce07f0;
+  background: linear-gradient(90deg, #ce07f0 0%, #11e651 100%); }
+  #header-list a {
+    text-decoration: none;
+    color: white; }
+
+.header-oth {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; }
+  .header-oth li {
+    display: inline-block;
+    list-style: none; }
+    .header-oth li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem; }
