@@ -8,3 +8,12 @@
             <input type="submit" value="Post">
         </form>
     </section>
+
+    <section>
+        <h1>Posts</h1>
+        <ul>
+        <%for(i of posts){%>
+        <li><h2><%=i.content%> By <%=i.user.name%></h2></li>
+        <%}%>
+        </ul>
+    </section>
