@@ -1,19 +1,43 @@
 
     <h1>Hey This is the home page</h1>
 
-
+<%if(locals.user){%>
     <section>
         <form action="/post/create" method="POST" id="post-from">
-            <textarea name="content" id="content" cols="30" rows="3" placeholder="Enter Text..."></textarea>
+            <textarea name="content" id="content" cols="30" rows="3" placeholder="Enter Text..." required></textarea>
             <input type="submit" value="Post">
         </form>
     </section>
+
+<%}%>
 
     <section>
         <h1>Posts</h1>
         <ul>
         <%for(i of posts){%>
         <li><h2><%=i.content%> By <%=i.user.name%></h2></li>
+        <div class="post-comments">
+            <%if(locals.user){%>
+        <form action="/comment/create" method="POST" >
+            <input type="text" name="comment" id="comment" placeholder="Add Comment" required>
+            <input type="hidden" name="post" value="<%=i._id%>">
+            <input type="submit" value="Add Comment">
+        
+        </form>
         <%}%>
+        <h3>Comments</h3>
+        <section>
+            <ul>
+            <%for(j of i.comments){%>
+                <li>
+                <h4><u><%=j.user.name%></u></h4>
+                <p><%=j.content%></p>
+                </li>
+                <%}%>
+            </ul>
+        </section>
+        <%}%>
+        </div>
+       
         </ul>
     </section>

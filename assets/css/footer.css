@@ -1,4 +1,6 @@
 #footer-main {
+  position: absolute;
+  bottom: auto;
   display: flex;
   flex-direction: row;
   justify-content: left;
