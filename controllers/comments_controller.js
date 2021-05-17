@@ -30,9 +30,14 @@ module.exports.create=function(req,res)
 };
 module.exports.destroy=function(req,res){
 
-    Comment.findById(req.params.id,function(err,comment){
+    Comment.findById(req.params.id).populate('user').exec(function(err,comment){
         if(err){console.log('Error in Deleting Comment');return ;}
-        if(comment && req.user.id==comment.user)
+        if(!comment)
+        {
+            return res.redirect('back');
+        }
+        User.find({post:comment.post},function(err,user){
+        if(comment && (req.user.id==comment.user || req.user.id==user.id))
         {   
             const pid=comment.post;
             comment.remove();
@@ -65,5 +70,5 @@ module.exports.destroy=function(req,res){
         {
             return res.redirect('back');
         }
-    });
+    });});
 };

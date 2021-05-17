@@ -43,8 +43,8 @@
                 
                 <span>
 
-                    <%if(locals.user && locals.user.id == j.user.id ){%>
-                        <a href="/comment/destroy/<%=j.id%>" style="display: inline;">delete</a>
+                    <%if(locals.user && (locals.user.id == j.user.id || locals.user.id == j.post.user) ){%>
+                        <a href="/comment/destroy/<%=j.id%>" style="display: inline;">delete  </a>
                         <%}%>
                 </span>
                 
