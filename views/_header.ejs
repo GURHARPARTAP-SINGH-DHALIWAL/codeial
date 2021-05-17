@@ -4,7 +4,7 @@
        <a href="/"> <h2>CODEIAL</h2></a>
         <% if(locals.user){%>
             <div class="header-oth">
-            <li><a href="/user/profile"><%=user.name%></a></li>
+            <li><a href="/user/profile/<%=user.id%>"><%=user.name%></a></li>
             <li><u><a href="/user/sign-out">Sign Out</a></u></li>
             </div>
             <%} else{%>

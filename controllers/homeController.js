@@ -1,5 +1,6 @@
 const Post=require('../models/posts');
 const Comment=require('../models/comment');
+const User=require('../models/users');
 
 module.exports.home=function(req,res){
     console.log(req.cookies);
@@ -21,12 +22,17 @@ module.exports.home=function(req,res){
     .exec(function(err,post){
         if(err){console.log('Error in Displaying Posts');return;}
        
+        User.find({},function(err,users){
+            if(err){console.log('Error in Dislplaying Friends List');return;}
 
-        return res.render('home',{
-            title:"Home Page",
-            posts:post,
-            
+            return res.render('home',{
+                title:"Home Page",
+                posts:post,
+                all_users:users
+                
+            });
         });
+       
     });
     // return res.render('home',{
     //     title:"Home Page"

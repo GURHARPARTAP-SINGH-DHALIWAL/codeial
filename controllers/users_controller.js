@@ -1,10 +1,13 @@
 //USer module is required
 const User=require('../models/users');
 module.exports.profile=function(req,res){
-    return res.render('users',{
-        title:"profile",
-        name:"GSD"
+    User.findById(req.params.id,function(err,user){
+        return res.render('users',{
+            title:"profile",
+            user:user
+        });
     });
+   
 };
 module.exports.signUp=function(req,res){
     if(req.isAuthenticated())
