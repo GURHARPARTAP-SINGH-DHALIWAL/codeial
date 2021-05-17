@@ -10,3 +10,21 @@ module.exports.create=function(req,res){
     });
 
 }
+
+module.exports.destroy=function(req,res){
+    Post.findById(req.params.id,function(err,post){
+        if(err){console.log('Error in Deleting Post');return ;}
+        if(post&&post.user==req.user.id)
+        {
+            post.remove();
+            Comment.deleteMany({post:req.params.id},function(err){
+                if(err){console.log('Error in Deleting Comments While Deleting a Post');return ;}
+                return res.redirect('back');
+            });
+        }
+        else
+        {
+            return res.redirect('back');
+        }
+    });
+};
