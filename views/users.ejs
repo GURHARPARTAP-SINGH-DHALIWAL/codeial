@@ -5,11 +5,11 @@
         <form action="/user/update/<%=user.id%>" method="POST">
             <h3>Update Name and Email</h3>
             <label for="name">Enter New Name : </label>
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" placeholder="Enter New Name" value="<%=c_user.name%>" required>
             <br>
             <br>
             <label for="email">Enter New Email : </label>
-            <input type="text" name="email" id="email">
+            <input type="email" name="email" id="email" placeholder="Enter New Email" value="<%=c_user.email%>" required >
             <br>
             <br>
             <input type="submit" value="Update">

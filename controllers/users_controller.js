@@ -63,18 +63,34 @@ module.exports.destroySession=function(req,res)
 }
 
 module.exports.update=function(req,res){
-    User.findById(req.params.id,function(err,user){
-        console.log(user);
-        if(user&&req.user.id==req.params.id)
-        {
-        user.name=req.body.name;
-        user.email=req.body.email;
-        user.save();
-        return res.redirect('back');
+    //My Try
+    // User.findById(req.params.id,function(err,user){
+    //     console.log(user);
+    //     if(user&&req.user.id==req.params.id)
+    //     {
+    //     user.name=req.body.name;
+    //     user.email=req.body.email;
+    //     user.save();
+    //     return res.redirect('back');
+    // }
+    // else
+    // {
+    //     return res.redirect('back');
+    // }
+    // });
+
+    if(req.params.id==req.user.id)
+    {    
+        console.log(req.body);
+        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+            if(err){console.log('Error in Updating User Info');return ;}
+            return res.redirect('back');
+
+        });
     }
     else
     {
-        return res.redirect('back');
+        return res.status(401).send('Unauthorised');
     }
-    });
+
 };
