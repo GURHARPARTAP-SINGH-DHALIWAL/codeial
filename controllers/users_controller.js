@@ -4,7 +4,7 @@ module.exports.profile=function(req,res){
     User.findById(req.params.id,function(err,user){
         return res.render('users',{
             title:"profile",
-            user:user
+            c_user:user
         });
     });
    
@@ -61,3 +61,20 @@ module.exports.destroySession=function(req,res)
     req.logout();
     return res.redirect('/');
 }
+
+module.exports.update=function(req,res){
+    User.findById(req.params.id,function(err,user){
+        console.log(user);
+        if(user&&req.user.id==req.params.id)
+        {
+        user.name=req.body.name;
+        user.email=req.body.email;
+        user.save();
+        return res.redirect('back');
+    }
+    else
+    {
+        return res.redirect('back');
+    }
+    });
+};

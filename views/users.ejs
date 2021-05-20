@@ -1,2 +1,21 @@
 
-    <h1>Hey This is <%=user.name%> and email <%=user.email%></h1>
+    <h1>Hey This is <%=c_user.name%> and email <%=c_user.email%></h1>
+
+    <%if(locals.user.id==c_user.id){%>
+        <form action="/user/update/<%=user.id%>" method="POST">
+            <h3>Update Name and Email</h3>
+            <label for="name">Enter New Name : </label>
+            <input type="text" name="name" id="name">
+            <br>
+            <br>
+            <label for="email">Enter New Email : </label>
+            <input type="text" name="email" id="email">
+            <br>
+            <br>
+            <input type="submit" value="Update">
+            <br>
+            <br>
+
+        </form>
+        <%}%>
+
