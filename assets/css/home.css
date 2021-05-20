@@ -1,0 +1,13 @@
+#home-container {
+  display: flex;
+  height: auto;
+  padding-bottom: 20px; }
+  #home-container #user-feed {
+    width: 70%;
+    height: 100%;
+    padding: 10px; }
+  #home-container #friends-list {
+    width: 30%;
+    padding: 10px;
+    height: auto;
+    border-left: 2px solid black; }

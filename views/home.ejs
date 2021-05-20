@@ -1,6 +1,6 @@
-
-    <h1>Hey This is the home page</h1>
-
+<link rel="stylesheet" href="/css/home.css">
+ <div id="home-container">
+<section id="user-feed">
 <%if(locals.user){%>
     <section>
         <form action="/post/create" method="POST" id="post-from">
@@ -21,10 +21,12 @@
                 
                <%-include('_post')-%>
         <%}%>
-        </div>
+        
        
         </ul>
     </section>
+
+</section>
 
 
     <section id="friends-list">
@@ -35,3 +37,7 @@
                 <%}%>
         </ul>
     </section>
+
+
+
+    </div>

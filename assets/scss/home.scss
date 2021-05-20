@@ -1,0 +1,22 @@
+#home-container{
+    display: flex;
+    height: auto;
+    padding-bottom: 20px;
+    #user-feed{
+        width: 70%;
+        height: 100%;
+        // display: inline-block;
+        
+        padding: 10px;
+      
+    }
+    #friends-list{
+        // display: inline-block;
+        width: 30%;
+        padding: 10px;
+        height: auto;
+        border-left: 2px solid black;
+        
+    }
+   
+}
