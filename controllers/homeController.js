@@ -3,7 +3,7 @@ const Comment=require('../models/comment');
 const User=require('../models/users');
 
 module.exports.home=async function(req,res){
-
+   try{
     let post=await Post.find({}).populate('user').populate({
         path:'comments',
         populate:{
@@ -16,7 +16,11 @@ module.exports.home=async function(req,res){
         posts:post,
         all_users:users
 
-    });
+    });}
+    catch(err){
+        console.log('Error ',err);
+        return ;
+    }
     // console.log(req.cookies);
     // // Post.find({},function(err,post){
     // //     if(err){console.log('Error in Displaying Posts');return;}

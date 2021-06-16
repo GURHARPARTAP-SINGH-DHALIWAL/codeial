@@ -2,44 +2,88 @@ const Comment=require('../models/comment');
 const Post=require('../models/posts');
 const User=require('../models/users');
 
-module.exports.create=function(req,res)
+module.exports.create=async function(req,res)
 {   
-
-    var pid=req.body.post;
-    Post.findById(pid,function(err,post){
-        if(err){console.log('Error in verifying Post');return ;}
+    
+    
+    try{
+        //get id from params send slong with from
+        //some things are hidden too
+        //post id is sedn using hidden form
+        //_id returns object id returns string
+        let post=await Post.findById(req.body.post);
+        console.log(post);
         if(!post)
-        {
-            return res.redirect('back');
-        }
-        else
-        {
-            Comment.create({
-                content:req.body.comment,
-                user:req.user._id,
-                post:pid
-            },function(err,comment){
-                if(err){console.log('Error in Adding Comment');return ;}
-                post.comments.push(comment);
-                post.save();
-                return res.redirect('back');
-            });
-        }
-    });
+        return res.redirect('back');
+        let comment=await Comment.create({
+            content:req.body.comment,
+            user:req.user._id,
+            post:req.body.post
+
+        });
+        console.log(comment);
+      await  post.comments.push(comment);
+      await  post.save();
+        return res.redirect('back');
+
+
+
+    }catch(err){
+        console.log('Error ',err);
+        return ;
+    }
+
+    // var pid=req.body.post;
+    // Post.findById(pid,function(err,post){
+    //     if(err){console.log('Error in verifying Post');return ;}
+    //     if(!post)
+    //     {
+    //         return res.redirect('back');
+    //     }
+    //     else
+    //     {
+    //         Comment.create({
+    //             content:req.body.comment,
+    //             user:req.user._id,
+    //             post:pid
+    //         },function(err,comment){
+    //             if(err){console.log('Error in Adding Comment');return ;}
+    //             post.comments.push(comment);
+    //             post.save();
+    //             return res.redirect('back');
+    //         });
+    //     }
+    // });
 
 };
-module.exports.destroy=function(req,res){
+module.exports.destroy=async function(req,res){
+    try{
+        let comment=await Comment.findById(req.params.id);
+        if(comment&&comment.user==req.user.id)
+        {
+            const PostId=comment.post;
+            await  comment.remove();
+            Post.findByIdAndUpdate(PostId,{$pull:{comments:req.params.id}});
+           
 
-    Comment.findById(req.params.id,function(err,comment){
-        if(err){console.log('Error in Deleting Comment');return ;}
-        if(comment && req.user.id==comment.user)
-        {   
-            const pid=comment.post;
-            comment.remove();
-            Post.findByIdAndUpdate(pid,{$pull:{comments:req.params.id}},function(err,post){
-                if(err){console.log('Error in Deleting Comment from post');return ;}
-                return res.redirect('back');
-            });
+        }
+        return res.redirect('back');
+
+       
+    }catch(err){
+        console.log('Error ',err);
+    }
+
+    // Comment.findById(req.params.id,function(err,comment){
+    //     if(err){console.log('Error in Deleting Comment');return ;}
+    //     if(comment && req.user.id==comment.user)
+    //     {   
+    //         const pid=comment.post;
+    //         comment.remove();
+    //         Post.findByIdAndUpdate(pid,{$pull:{comments:req.params.id}},function(err,post){
+    //             if(err){console.log('Error in Deleting Comment from post');return ;}
+    //             return res.redirect('back');
+    //         });
 
 
 
@@ -60,10 +104,10 @@ module.exports.destroy=function(req,res){
 
 
 
-        }
-        else
-        {
-            return res.redirect('back');
-        }
-    });
+    //     }
+    //     else
+    //     {
+    //         return res.redirect('back');
+    //     }
+    // });
 };
