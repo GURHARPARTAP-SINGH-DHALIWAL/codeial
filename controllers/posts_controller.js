@@ -5,7 +5,10 @@ module.exports.create=function(req,res){
         content:req.body.content,
         user:req.user._id
     },function(err,post){
-        if(err){console.log('Error in Posting');return ;}
+        if(err){console.log('Error in Posting');
+        req.flash('error','Unexpected Error'); 
+        return ;}
+        req.flash('success','Post Created!');
         return res.redirect('back');
     });
 
@@ -17,6 +20,11 @@ module.exports.destroy=async function(req,res){
     {
     await post.remove();
     await Comment.deleteMany({post:post._id}); 
+    req.flash('success','Post Deleted!');
+    }
+    else
+    {
+        req.flash('error','You cannot delete this Post!');
     }
     return res.redirect('back');
     

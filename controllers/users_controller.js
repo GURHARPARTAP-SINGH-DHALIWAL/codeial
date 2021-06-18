@@ -33,12 +33,14 @@ module.exports.create=function(req,res){
     console.log(req.body);
   
     if(req.body.password!=req.body.confirm_password)
-    {
+    {    req.flash('error','Passwords do not match');
         return res.redirect('back');
     }
     User.findOne({email:req.body.email},function(err,user)
     {
-        if(err){console.log('Error in Signing Up the user');return ;}
+        if(err){console.log('Error in Signing Up the user');
+        req.flash('error','Unexpected Error');
+        return ;}
         if(!user)
         {
             User.create({
@@ -46,7 +48,8 @@ module.exports.create=function(req,res){
                 email:req.body.email,
                 password:req.body.password
             },function(err,user){
-                if(err){console.log('Error in Creating User in DB');return ;}
+                if(err){console.log('Error in Creating User in DB'); req.flash('error','Unexpected Error');return ;}
+                req.flash('success','Registered Successfully!');
                 return res.redirect('/user/sign-in');
             });
         }

@@ -21,6 +21,7 @@ module.exports.create=async function(req,res)
             post:req.body.post
 
         });
+        req.flash('success','Comment added Successfully');
         console.log(comment);
       await  post.comments.push(comment);
       await  post.save();
@@ -29,8 +30,9 @@ module.exports.create=async function(req,res)
 
 
     }catch(err){
+        req.flash('error','Unexpected Error');
         console.log('Error ',err);
-        return ;
+        return res.redirect('back');
     }
 
     // var pid=req.body.post;
@@ -63,15 +65,23 @@ module.exports.destroy=async function(req,res){
         {
             const PostId=comment.post;
             await  comment.remove();
+            req.flash('success','Comment Deleted!');
             Post.findByIdAndUpdate(PostId,{$pull:{comments:req.params.id}});
            
 
+        }
+        else
+        {
+            req.flash('error','You are  not authorised to delete this comment!');
         }
         return res.redirect('back');
 
        
     }catch(err){
+        req.flash('error','Unexpected Error');
         console.log('Error ',err);
+        return res.redirect('back');
+
     }
 
     // Comment.findById(req.params.id,function(err,comment){
