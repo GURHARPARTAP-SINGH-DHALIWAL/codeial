@@ -9,7 +9,7 @@ module.exports.home=async function(req,res){
         populate:{
             path:'user'
         }
-    });
+    }).sort('-createdAt');
     let users=await User.find({});
     return res.render('home',{
         title:'Home Page',
