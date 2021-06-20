@@ -53,6 +53,11 @@ module.exports.create=function(req,res){
                 return res.redirect('/user/sign-in');
             });
         }
+        else
+        {
+            req.flash('error','This email is already registered');
+            return res.redirect('/user/sign-in');
+        }
     });
 };
 module.exports.createSession=function(req,res){
@@ -88,13 +93,14 @@ module.exports.update=function(req,res){
     {    
         console.log(req.body);
         User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-            if(err){console.log('Error in Updating User Info');return ;}
+            if(err){console.log('Error in Updating User Info');req.flash('error','Unexpected error');return ;}
+            req.flash('success','Updated Successfully!');
             return res.redirect('back');
 
         });
     }
     else
-    {
+    {   
         return res.status(401).send('Unauthorised');
     }
 
