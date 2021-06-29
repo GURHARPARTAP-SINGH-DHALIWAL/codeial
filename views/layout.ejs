@@ -26,7 +26,7 @@
 
     <%-script%>
     <script>
-         <%if(flash.success && flash.success.length>0){%>
+         if(flash.success && flash.success.length>0){
             new Noty({
                     type: 'success',
                     layout: 'topRight',
@@ -34,8 +34,8 @@
                     theme:'relax',
                     timeout:1500
                 }).show();
-        <%}%>
-        <%if(flash.error && flash.error.length>0){%>
+        }
+        if(flash.error && flash.error.length>0){
             new Noty({
                     theme:'relax',
                     type: 'error',
@@ -43,7 +43,7 @@
                     text: '<%=flash.error%>',
                     timeout:1500
                 }).show();
-        <%}%>
+        }
     </script>
 
 </body>
