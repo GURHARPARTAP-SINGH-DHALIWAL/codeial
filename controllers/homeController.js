@@ -4,7 +4,8 @@ const User=require('../models/users');
 
 module.exports.home=async function(req,res){
    try{
-    let post=await Post.find({}).populate('user').populate({
+       //Added -password change if error
+    let post=await Post.find({}).populate('user','-password').populate({
         path:'comments',
         populate:{
             path:'user'

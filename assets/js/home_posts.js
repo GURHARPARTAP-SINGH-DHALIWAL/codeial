@@ -1,4 +1,16 @@
 {   
+    let deleteAll=function()
+    {
+        let deletButtons=document.querySelectorAll('.delete-post-button');
+        for(i of deletButtons)
+        {   console.log(i);
+            deletePost(i);
+
+        }
+    }
+
+
+
     let showNoti=function(data)
     {
         if(data.flash.success && data.flash.success.length>0){
@@ -38,6 +50,7 @@
                $('#post-list').prepend(newPost);
                console.log(data);
                showNoti(data);
+               newPostFrom.value="";
                
            },
            error:function(error)
@@ -49,7 +62,7 @@
        });
    });
     }
-
+     
     let newPostDOM=function(i){
         return $(`  <li id="post-${i._id}">
        
@@ -97,6 +110,7 @@
         });
     }
     createPost();
+    deleteAll();
     
 }
 // See in create post there is always one form to be taken care of 
