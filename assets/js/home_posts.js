@@ -8,7 +8,35 @@
 
         }
     }
-
+    let comentAll=function()
+    {
+        let posts=document.querySelectorAll('.post');
+        for(i of posts)
+        {
+            commentCreate($(' .comment-form',i),i);
+        }
+    }
+    let commentCreate=function(commentForm,post)
+    {
+        commentForm.submit(function(e){
+            e.preventDefault();
+           $.ajax({
+            type:'post',
+            url:'/comment/create',
+            data:commentForm.serialize(),
+            success:function(data){
+                console.log(data);
+                let newComment=newCommentDOM(data.data.comment);
+                console.log(  $(' .comment-list',post));
+                $(' .comment-list',post).prepend(newComment);
+            },
+            error:function(err)
+            {
+                console.log(error.responseText);
+            }
+           });
+        });
+    }
 
 
     let showNoti=function(data)
@@ -47,6 +75,9 @@
                //New Post will conatina html object correspinding to that psot
                let newPost=newPostDOM(data.data.post);
                deletePost($(' .delete-post-button',newPost)); // passing only class without newPost will not work also put space
+               commentCreate($(' .comment-form',newPost),newPost);
+               console.log($(' .delete-post-button',newPost));
+               console.log($(' .comment-form',newPost));
                $('#post-list').prepend(newPost);
                console.log(data);
                showNoti(data);
@@ -72,7 +103,7 @@
     <h2>${i.content} By ${i.user.name}</h2>
     <div class="post-comments">
     
-    <form action="/comment/create" method="POST" >
+    <form action="/comment/create" method="POST" class="comment-form">
     <input type="text" name="comment" id="comment" placeholder="Add Comment" required>
     <input type="hidden" name="post" value="${i._id}">
     <input type="submit" value="Add Comment">
@@ -81,7 +112,7 @@
     
     <h3>Comments</h3>
     <section>
-    <ul id="comment-post-${i._id}>
+    <ul class="comment-list">
    
     </ul>
     </section>
@@ -89,6 +120,23 @@
     
     
     `);
+    }
+    let newCommentDOM=function(j)
+    {
+        return $(`<li>
+        <h4><u>${j.user.name}</u></h4>
+        <p>${j.content}
+        
+        <span>
+    
+           
+                <a href="/comment/destroy/${j._id}" style="display: inline;">delete</a>
+                
+        </span>
+        
+        
+        </p>
+        </li>`);
     }
     let deletePost=function(deletelink)
     {    // delete link will  contain query selecter corresponding to that
@@ -111,6 +159,8 @@
     }
     createPost();
     deleteAll();
+    comentAll();
+
     
 }
 // See in create post there is always one form to be taken care of 
