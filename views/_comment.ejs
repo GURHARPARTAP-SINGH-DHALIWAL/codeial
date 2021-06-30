@@ -1,11 +1,11 @@
-<li>
+<li id="comment-<%=j._id%>">
     <h4><u><%=j.user.name%></u></h4>
     <p><%=j.content%>
     
     <span>
 
         <%if(locals.user && locals.user.id == j.user.id ){%>
-            <a href="/comment/destroy/<%=j.id%>" style="display: inline;">delete</a>
+            <a href="/comment/destroy/<%=j._id%>" style="display: inline;" class="comment-delete">delete</a>
             <%}%>
     </span>
     

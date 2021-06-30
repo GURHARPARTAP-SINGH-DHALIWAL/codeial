@@ -79,14 +79,30 @@ module.exports.destroy=async function(req,res){
         {
             const PostId=comment.post;
             await  comment.remove();
-            req.flash('success','Comment Deleted!');
-            Post.findByIdAndUpdate(PostId,{$pull:{comments:req.params.id}});
+               req.flash('success','Comment Deleted!');
+         await  Post.findByIdAndUpdate(PostId,{$pull:{comments:req.params.id}});
+            
            
 
         }
         else
-        {
+        {    console.log(req.user.id);
+            console.log(comment.user);
             req.flash('error','You are  not authorised to delete this comment!');
+        }
+        if(req.xhr){
+            return res.status(200).json({
+                data:{
+                comment_id:req.params.id
+                },
+                flash:{
+                    success:req.flash("success"),
+                    error:req.flash("error")
+                },
+                message:"Comment Deleted Successfully"
+            },
+          
+        );
         }
         return res.redirect('back');
 
