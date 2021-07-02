@@ -50,7 +50,11 @@
     }
     //Comment AJAX
     let commentCreate=function(commentForm,post)
-    {
+    {    
+        console.log("hello");
+        console.log(commentForm);
+        console.log("hello");
+        console.log($(commentForm));
         $(commentForm).submit(function(e){
             e.preventDefault();
            $.ajax({
@@ -75,7 +79,8 @@
         });
     }
     let deleteComment=function(link)
-    {     
+    {      //Use & in front of it
+        
          $(link).click(function(e){
              e.preventDefault();
              $.ajax({

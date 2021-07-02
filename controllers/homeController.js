@@ -7,6 +7,7 @@ module.exports.home=async function(req,res){
        //Added -password change if error
     let post=await Post.find({}).populate('user','-password').populate({
         path:'comments',
+        
         populate:{
             path:'user'
         }

@@ -55,7 +55,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 app.use(flash());
-app.use(customMware.setFlash);
+app.use(customMware.setFlash);//'//make uploads path available to browser'
+app.use('/uploads',express.static(__dirname+'/uploads'));
 //Use router for handling all requests any route starting wth / is sent to routes to entry point file index.js
 app.use('/',require('./routes'));
 // app.use(express.urlencoded());

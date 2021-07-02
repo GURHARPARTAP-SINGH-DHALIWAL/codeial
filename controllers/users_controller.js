@@ -22,7 +22,7 @@ module.exports.signUp=function(req,res){
 module.exports.signIn=function(req,res){
     if(req.isAuthenticated())
     {
-        return res.redirect('/user/profile');
+        return res.redirect('/');
     }
     return res.render('user_sign_in',{
         title:"Coedial|SIgnIn"
@@ -72,7 +72,7 @@ module.exports.destroySession=function(req,res)
     return res.redirect('/');
 }
 
-module.exports.update=function(req,res){
+module.exports.update = async function(req,res){
     //My Try
     // User.findById(req.params.id,function(err,user){
     //     console.log(user);
@@ -88,19 +88,48 @@ module.exports.update=function(req,res){
     //     return res.redirect('back');
     // }
     // });
+    //Secon Version
+    // if(req.params.id==req.user.id)
+    // {    
+    //     console.log(req.body);
+    //     User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+    //         if(err){console.log('Error in Updating User Info');req.flash('error','Unexpected error');return ;}
+    //         req.flash('success','Updated Successfully!');
+    //         return res.redirect('back');
 
+    //     });
+    // }
+    // else
+    // {   
+    //     return res.status(401).send('Unauthorised');
+    // }
     if(req.params.id==req.user.id)
     {    
-        console.log(req.body);
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-            if(err){console.log('Error in Updating User Info');req.flash('error','Unexpected error');return ;}
-            req.flash('success','Updated Successfully!');
-            return res.redirect('back');
+        try{
+            let user=await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){console.log("*******Multer Error",err);return;}
+                console.log(req.file);
+                user.name=req.body.name;
+                user.email=req.body.email;
+                if(req.file){
+                    user.avatar=User.avatarPath+'/'+req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            });
 
-        });
-    }
+        }catch(err){
+
+            req.flash('error','Unexpected Error'); 
+            console.log('Error : ',err);
+            return res.redirect('back');
+        }
+
+        }
+    
     else
-    {   
+    {   req.flash('error','Unauthorised');
         return res.status(401).send('Unauthorised');
     }
 
