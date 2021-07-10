@@ -1,5 +1,7 @@
 //USer module is required
 const User=require('../models/users');
+const path=require('path');
+const fs=require('fs');
 module.exports.profile=function(req,res){
     User.findById(req.params.id,function(err,user){
         return res.render('users',{
@@ -113,6 +115,10 @@ module.exports.update = async function(req,res){
                 user.name=req.body.name;
                 user.email=req.body.email;
                 if(req.file){
+                    if(user.avatar)
+                    {   if(fs.existsSync(path.join(__dirname,'..',user.avatar)))
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar));  // path . join will join according to conventions
+                    }
                     user.avatar=User.avatarPath+'/'+req.file.filename;
                 }
                 user.save();
